@@ -29,4 +29,11 @@ public class LoginPageObjects {
     public WebElement getLoginElement(WebDriver driver){
         return driver.findElement(loginButtonLocator);
     }
+    public ProductsPageObjects loginApplication(WebDriver driver,String userName,String passWord)
+    {
+        getUserNameElement(driver).sendKeys(userName);
+        getPasswordElement(driver).sendKeys(passWord);
+        getLoginElement(driver).click();
+        return new ProductsPageObjects();
+    }
 }

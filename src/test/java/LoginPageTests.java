@@ -19,7 +19,7 @@ public class LoginPageTests {
     @BeforeMethod
     public void setUp(){
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
         loginPageObjects = new LoginPageObjects();    }
@@ -38,9 +38,7 @@ public class LoginPageTests {
 
     @Test
     public void testLoginScenarios(){
-        loginPageObjects.getUserNameElement(driver).sendKeys("standard_user");
-        loginPageObjects.getPasswordElement(driver).sendKeys("secret_sauce");
-        loginPageObjects.getLoginElement(driver).click();
+        loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
     }
 
     @AfterMethod
