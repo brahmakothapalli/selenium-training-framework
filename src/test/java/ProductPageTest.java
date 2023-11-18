@@ -21,24 +21,20 @@ public class ProductPageTest {
         driver.get("https://www.saucedemo.com/");
         loginPageObjects = new LoginPageObjects();    }
     @Test
-    public void testValidateProductsPage()
-    {
-
+    public void testValidateProductsPage()    {
         ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
-       // ProductsPageObjects productPageObject = new ProductsPageObjects();
         String productPageVariable = productPageObject.productTitle(driver);
         Assert.assertEquals(productPageVariable,"Products","Product title not matched");
         WebElement cartIcon = productPageObject.cartTitle(driver);
         Assert.assertTrue(cartIcon.isDisplayed(),"cart icon not displayed");
     }
     @Test
-    public void testAddingProductTOCart()
-    {
-
-        //ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
-        // ProductsPageObjects productPageObject = new ProductsPageObjects();
-        ProductsPageObjects checkOutOverView =  new ProductsPageObjects().checkOut(driver,"Deepthi","Gandham","8050");
-        String checkOutOverViewElement =
+    public void testAddingProductToCart()   {
+        ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
+        productPageObject.addItemToCart(driver);
+        Assert.assertTrue(productPageObject.doesItemsAddedToCart(driver), "Items not added to cart");
+        String itemsCount = productPageObject.getCartItemsCount(driver);
+        System.out.println("Items count -- "+itemsCount);
     }
 
     @AfterMethod
