@@ -33,10 +33,17 @@ public class ProductPageTest {
         ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
         productPageObject.addItemToCart(driver);
         Assert.assertTrue(productPageObject.doesItemsAddedToCart(driver), "Items not added to cart");
-        String itemsCount = productPageObject.getCartItemsCount(driver);
-        System.out.println("Items count -- "+itemsCount);
-    }
+        productPageObject.getCartItemsCount(driver);
 
+    }
+    @Test
+    public void testAddingProductToCartCount()
+    {
+        ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
+        productPageObject.addItemToCart(driver);
+        int productsCount = productPageObject.itemsAddedCount(driver);
+        System.out.println(productsCount);
+    }
     @AfterMethod
     public void tearDown(){
         driver.close();
