@@ -1,29 +1,13 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import base.BaseTest;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageObjects.CartPageObjects;
-import pageObjects.LoginPageObjects;
-import pageObjects.ProductsPageObjects;
+import pageobjects.CartPageObjects;
+import pageobjects.ProductsPageObjects;
 
-public class CartPageTests {
-
-
-    LoginPageObjects loginPageObjects;
-    WebDriver driver = null;
-    @BeforeMethod
-    public void setUp(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/");
-        loginPageObjects = new LoginPageObjects();
-    }
+public class CartPageTests extends BaseTest {
     @Test
     public void testRemoveItemInTheCartPage(){
-        ProductsPageObjects productsPageObjects = loginPageObjects.loginApplication(driver, "standard_user","secret_sauce");
+        ProductsPageObjects productsPageObjects = loginPageObjects.loginApplication(driver, userName,password);
         productsPageObjects.addItemToCart(driver);
         Assert.assertTrue(productsPageObjects.doesItemsAddedToCart(driver));
         CartPageObjects cartPageObjects = productsPageObjects.viewCart(driver);

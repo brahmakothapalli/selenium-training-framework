@@ -1,28 +1,14 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
+import base.BaseTest;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageObjects.LoginPageObjects;
-import pageObjects.ProductsPageObjects;
+import pageobjects.ProductsPageObjects;
 
-public class ProductPageTest {
+public class ProductPageTest extends BaseTest {
 
-    LoginPageObjects loginPageObjects;
-    WebDriver driver = null;
-    @BeforeMethod
-    public void setUp(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/");
-        loginPageObjects = new LoginPageObjects();    }
     @Test
     public void testValidateProductsPage()    {
-        ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
+        ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,userName,password);
         String productPageVariable = productPageObject.productTitle(driver);
         Assert.assertEquals(productPageVariable,"Products","Product title not matched");
         WebElement cartIcon = productPageObject.cartTitle(driver);
@@ -30,22 +16,19 @@ public class ProductPageTest {
     }
     @Test
     public void testAddingProductToCart()   {
-        ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
+        ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,userName, password);
         productPageObject.addItemToCart(driver);
         Assert.assertTrue(productPageObject.doesItemsAddedToCart(driver), "Items not added to cart");
-        productPageObject.getCartItemsCount(driver);
+        String itemsCount = productPageObject.getCartItemsCount(driver);
+        System.out.println(itemsCount);
 
     }
     @Test
-    public void testAddingProductToCartCount()
-    {
-        ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
-        productPageObject.addItemToCart(driver);
-        int productsCount = productPageObject.itemsAddedCount(driver);
-        System.out.println(productsCount);
+    public void testAddMultipleProducts()    {
+        ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,userName,password);
+        productPageObject.addMultipleProducts(driver);
+        String count = productPageObject.getCartItemsCount(driver);
+        System.out.println(count);
     }
-    @AfterMethod
-    public void tearDown(){
-        driver.close();
-    }
+
 }

@@ -1,28 +1,8 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import base.BaseTest;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageObjects.LoginPageObjects;
 
-public class LoginPageTests {
-
-    LoginPageObjects loginPageObjects;
-
-
-    WebDriver driver = null;
-
-    @BeforeMethod
-    public void setUp(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/");
-        loginPageObjects = new LoginPageObjects();    }
+public class LoginPageTests extends BaseTest {
 
     /**
      * Verifying the login page UI
@@ -38,13 +18,12 @@ public class LoginPageTests {
 
     @Test
     public void testLoginScenarios(){
-        loginPageObjects.loginApplication(driver,"standard_user","secret_sauce");
+
+        String path = System.getProperty("user.dir");
+
+        loginPageObjects.loginApplication(driver,userName, password);
     }
 
-    @AfterMethod
-    public void tearDown(){
-        driver.close();
-    }
 
 
 }
