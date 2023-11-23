@@ -1,5 +1,6 @@
 package pageobjects;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +15,7 @@ public class LoginPageObjects {
 
     By loginButtonLocator = By.id("login-button");
 
+    @Step("Getting login page title")
     public String getSwagTitle(WebDriver driver){
         return driver.findElement(swagLabsTitleLocator).getText();
     }
@@ -29,6 +31,8 @@ public class LoginPageObjects {
     public WebElement getLoginElement(WebDriver driver){
         return driver.findElement(loginButtonLocator);
     }
+
+    @Step("logging in to the application")
     public ProductsPageObjects loginApplication(WebDriver driver,String userName,String passWord)
     {
         getUserNameElement(driver).sendKeys(userName);

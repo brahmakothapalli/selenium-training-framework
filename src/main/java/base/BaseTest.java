@@ -1,6 +1,10 @@
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Allure;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestResult;
@@ -10,6 +14,7 @@ import org.testng.annotations.BeforeSuite;
 import pageobjects.LoginPageObjects;
 import utils.ConfigurationReader;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -39,11 +44,19 @@ public class BaseTest {
         loginPageObjects = new LoginPageObjects();
     }
 
+    public File getScreenshot(String testName) throws IOException {
+        String screenshotPath = System.getProperty("user.dir")+"//Screenshots//"+testName+".png";
+        TakesScreenshot takesScreenshot = (TakesScreenshot)driver;
+        File file = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(file, new File(screenshotPath));
+        return file;
+    }
+
     @AfterMethod
-    public void tearDown(ITestResult result){
+    public void tearDown(ITestResult result) throws IOException {
         if(result.getStatus() == ITestResult.FAILURE){
-            System.out.println("takescreen");
-            // report add
+            File fileObj = getScreenshot(result.getName());
+            Allure.addAttachment(result.getName(), FileUtils.openInputStream(fileObj));
         }
         driver.close();
     }

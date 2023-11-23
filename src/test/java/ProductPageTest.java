@@ -1,4 +1,5 @@
 import base.BaseTest;
+import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -7,6 +8,7 @@ import pageobjects.ProductsPageObjects;
 public class ProductPageTest extends BaseTest {
 
     @Test
+    @Description("This test validates products page UI")
     public void testValidateProductsPage()    {
         ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,userName,password);
         String productPageVariable = productPageObject.productTitle(driver);
@@ -15,6 +17,7 @@ public class ProductPageTest extends BaseTest {
         Assert.assertTrue(cartIcon.isDisplayed(),"cart icon not displayed");
     }
     @Test
+    @Description("This test validates adding product to cart functionality")
     public void testAddingProductToCart()   {
         ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,userName, password);
         productPageObject.addItemToCart(driver);
@@ -24,6 +27,7 @@ public class ProductPageTest extends BaseTest {
 
     }
     @Test
+    @Description("This test validates adding multiple products functionality")
     public void testAddMultipleProducts()    {
         ProductsPageObjects productPageObject=loginPageObjects.loginApplication(driver,userName,password);
         productPageObject.addMultipleProducts(driver);
